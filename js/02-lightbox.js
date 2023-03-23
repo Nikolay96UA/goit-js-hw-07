@@ -1,4 +1,31 @@
-import { galleryItems } from './gallery-items.js';
+import { galleryItems } from "./gallery-items.js";
 // Change code below this line
 
-console.log(galleryItems);
+// console.log(galleryItems);
+
+const galleryBox = document.querySelector(".gallery");
+
+const addGalleryEl = function (ArrItems) {
+  return ArrItems.map(({ preview, original, description }) => {
+    return `<li class="gallery__item">
+    <a class="gallery__link" href="${original}">
+       <img class="gallery__image" src="${preview}" alt="${description}" />
+    </a>
+ </li>`;
+  }).join("");
+};
+
+const galleryRender = addGalleryEl(galleryItems);
+
+galleryBox.insertAdjacentHTML("afterbegin", galleryRender);
+
+galleryBox.addEventListener("click", onImgSlider);
+
+function onImgSlider(event) {
+  event.preventDefault();
+
+  const lightbox = new SimpleLightbox(".gallery li a", {
+    captionsData: "alt",
+    captionDelay: "250",
+  });
+}
