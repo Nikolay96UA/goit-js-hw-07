@@ -29,15 +29,26 @@ function onImageClick(event) {
     return;
   }
 
-  const instance = basicLightbox.create(`
-    <img src="${event.target.dataset.source}" width="800" height="600">
-`);
+  const instance = basicLightbox.create(
+    `
+      <img src="${event.target.dataset.source}" width="800" height="600">
+    `,
+    {
+      onShow: () => {
+        window.addEventListener("keydown", hendelOnClose);
+      },
+      onClose: () => {
+        window.removeEventListener("keydown", hendelOnClose);
+      },
+    }
+  );
 
   instance.show();
 
-  galleryBox.addEventListener("keydown", (event) => {
+  function hendelOnClose(event) {
     if (event.code === "Escape") {
+      console.log("+");
       instance.close();
     }
-  });
+  }
 }
